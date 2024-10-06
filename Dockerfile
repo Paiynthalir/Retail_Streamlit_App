@@ -1,13 +1,17 @@
+# Use the official Python image from the Docker Hub
 FROM python:3.11
 
+# Set the working directory in the container
 WORKDIR /app
 
+# Copy requirements.txt to the working directory
 COPY requirements.txt .
 
-RUN pip install -r requirements.txt
+# Install the required packages
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the FastAPI application code into the container
-COPY . .
+# Copy the application code into the container
+COPY app ./app
 
-# Command to run the FastAPI application using Uvicorn
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080", "--reload"]
+# Command to run the Streamlit application
+CMD ["streamlit", "run", "app/main.py"]
